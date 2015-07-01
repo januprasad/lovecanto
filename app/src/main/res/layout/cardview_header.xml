@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardElevation="0.01dp"
+    android:layout_marginBottom="5dp"
+    card_view:cardCornerRadius="0dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jenuine.lovetips.Lobster
+            android:id="@+id/title"
+            android:gravity="left|center_vertical"
+            android:background="?android:selectableItemBackground"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textSize="28sp"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            />
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
