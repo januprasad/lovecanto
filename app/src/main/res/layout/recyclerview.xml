@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/backgroundViewGroup"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
@@ -37,6 +38,7 @@
         android:id="@+id/simpleRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="@string/square_blue_name"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

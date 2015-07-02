@@ -16,22 +16,23 @@ import android.view.ViewAnimationUtils;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class MainActivity extends AppCompatActivity {
 
-    private static final long ANIM_DURATION = 1500;
+    private static final long ANIM_DURATION = 1000;
     private View bgViewGroup;
     private Lobster bariolBoldTextView;
+    boolean isFirst=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         bariolBoldTextView = (Lobster) findViewById(R.id.mTextView);
         bariolBoldTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isFirst)
                 launchActivity();
             }
         });
-
-
         setupLayout();
         setupWindowAnimations();
         new Handler().postDelayed(new Runnable() {
@@ -135,5 +136,11 @@ public class MainActivity extends AppCompatActivity {
         });
         anim.setDuration(ANIM_DURATION);
         anim.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isFirst=false;
     }
 }
