@@ -23,17 +23,18 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="8dp"
-            android:textColor="@color/textcolour"
+            android:textColor="@color/primary"
             />
 
 
-        <com.jenuine.lovetips.Lobster
+        <TextView
             android:id="@+id/content"
             android:background="?android:selectableItemBackground"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingBottom="12dp"
             android:paddingTop="8dp"
+            android:textStyle="italic"
             android:lineSpacingExtra="4dp"
             android:focusable="true"
             android:clickable="true"

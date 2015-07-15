@@ -8,12 +8,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by jiahaoliuliu on 6/6/15.
- */
 public class ListTitlesAdapter extends RecyclerView.Adapter {
-    private ArrayList<Post> posts
-            ;
+    private ArrayList<Post> posts;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
