@@ -29,6 +29,7 @@ proguard/
 .idea/
 build/
 .gradle
+/posts
 
 # Mac Os
 .DS_Store

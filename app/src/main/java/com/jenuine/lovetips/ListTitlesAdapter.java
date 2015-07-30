@@ -1,5 +1,6 @@
 package com.jenuine.lovetips;
 
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class ListTitlesAdapter extends RecyclerView.Adapter {
         public ViewHolder(TextView v) {
             super(v);
             mTextView = v;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mTextView.setBackgroundResource(R.drawable.ripple_effect);
             v.setOnClickListener(this);
         }
@@ -40,8 +42,8 @@ public class ListTitlesAdapter extends RecyclerView.Adapter {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ListTitlesAdapter() {
-        posts = new Data().getArrayList();
+    public ListTitlesAdapter(Data data) {
+        posts = data.getArrayList();
 
     }
 

@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    tools:context="com.jenuine.lovetips.AboutLovecanto">
+    <com.jenuine.lovetips.Lobster
+        android:id="@+id/mTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#FFFF"
+        android:textSize="40sp"
+        android:transitionName="@string/app_name" />
+    <com.jenuine.lovetips.BariolTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:text="Design and Coding By Janu Prasad K"
+        android:textColor="#FFFF"
+        android:textSize="20sp"
+        android:transitionName="@string/app_name" />
+
+</FrameLayout>

@@ -38,5 +38,8 @@
     <string name="obs10">Vous l\'aimez passionnément ? Lui (ou elle) aussi, alors si vous ne l\'avez pas encore fait, c\'est le jour ou jamais de lui avouer.</string>
     <string name="obs11">Si vous ne l\'avez pas encore demandé(e) en mariage, respirez profondément et jetez-vous à l\'eau, c\'est le moment.</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

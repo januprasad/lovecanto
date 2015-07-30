@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- <scale
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXScale="1.0" android:toXScale="0.0"
+    android:pivotX="50%" 
+    android:fromYScale="1.0" android:toYScale="1.0"
+    android:pivotY="50%"        
+    android:duration="200"/>
+ -->    
+<!--  <translate
+      xmlns:android="http://schemas.android.com/apk/res/android" 
+      android:duration="@android:integer/config_longAnimTime" 
+      android:fromYDelta="0%p" 
+      android:toYDelta="0%p">
+</translate> 
+
+ -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:fillAfter="true" >
+
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="y"
+        android:valueFrom="0"
+        android:valueTo="0"
+        android:valueType="floatType" />
+    
+</set>

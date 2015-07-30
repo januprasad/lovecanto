@@ -1,6 +1,7 @@
 package com.jenuine.lovetips;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,7 +99,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             title.setBackgroundResource(R.drawable.ripple_effect);
+
             content = (TextView) itemView.findViewById(R.id.content);
         }
 

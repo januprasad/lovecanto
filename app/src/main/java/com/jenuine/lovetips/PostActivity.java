@@ -2,6 +2,8 @@ package com.jenuine.lovetips;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +11,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Transition;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 
 public class PostActivity extends AppCompatActivity {
@@ -31,17 +35,16 @@ public class PostActivity extends AppCompatActivity {
 
         int position = getIntent().getIntExtra("position", 0);
 
-        Data data = Data.getData();
+        String postsString = new AppDataPref(getApplicationContext()).getPrefs("posts");
+        Data data = new Gson().fromJson(postsString, Data.class);
         post = data.getArrayList().get(position);
-//        Log.i("Lovecanto",post.getTitle());
-//        Log.i("Lovecanto",post.getSubPostDatas().get(0).getContent());
-
-
-//        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        imageView.setImageResource(ImageLibs.getImage());
+//        imageView.setImageResource(ImageLibs.getImage());
+//        Log.i("Lovecanto",post.getTitle());
+//        Log.i("Lovecanto",post.getSubPostDatas().get(0).getContent());
+//        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 //        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
 //        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
 //            @Override
@@ -51,18 +54,32 @@ public class PostActivity extends AppCompatActivity {
 //                mTextView.setTextColor(mutedColor);
 //            }
 //        });
+        String imagedata=new AppDataPref(getApplicationContext()).getPrefs("images");
+        String url = ImageLibs.getImage(imagedata);
+//        Log.v("Lovecanto",url);
+//        Toast.makeText(getApplicationContext(),url,Toast.LENGTH_LONG).show();
+        Picasso picasso = Picasso.with(getApplicationContext());
+        picasso.load(url).into(imageView, new com.squareup.picasso.Callback() {
+            @Override
+            public void onSuccess() {
+                findViewById(R.id.progress_circular).setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onError() {
+
+            }
+        });
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         PostAdapter mAdapter = new PostAdapter(post, R.layout.cardview_header, R.layout.cardview, this);
         mRecyclerView.setAdapter(mAdapter);
-
-//        mRecyclerView.setOnScrollListener(onScrollListener);
-
-        setupLayout();
-        setupWindowAnimations();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setupLayout();
+            setupWindowAnimations();
+        }
 
     }
 
@@ -75,11 +92,13 @@ public class PostActivity extends AppCompatActivity {
         setupExitAnimations();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupEnterAnimations() {
         Transition enterTransition = getWindow().getSharedElementEnterTransition();
         enterTransition.addListener(new Transition.TransitionListener() {
             @Override
-            public void onTransitionStart(Transition transition) {}
+            public void onTransitionStart(Transition transition) {
+            }
 
             @Override
             public void onTransitionEnd(Transition transition) {
@@ -87,16 +106,20 @@ public class PostActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTransitionCancel(Transition transition) {}
+            public void onTransitionCancel(Transition transition) {
+            }
 
             @Override
-            public void onTransitionPause(Transition transition) {}
+            public void onTransitionPause(Transition transition) {
+            }
 
             @Override
-            public void onTransitionResume(Transition transition) {}
+            public void onTransitionResume(Transition transition) {
+            }
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupExitAnimations() {
         Transition sharedElementReturnTransition = getWindow().getSharedElementReturnTransition();
         sharedElementReturnTransition.setStartDelay(ANIM_DURATION);
@@ -111,19 +134,24 @@ public class PostActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTransitionEnd(Transition transition) {}
+            public void onTransitionEnd(Transition transition) {
+            }
 
             @Override
-            public void onTransitionCancel(Transition transition) {}
+            public void onTransitionCancel(Transition transition) {
+            }
 
             @Override
-            public void onTransitionPause(Transition transition) {}
+            public void onTransitionPause(Transition transition) {
+            }
 
             @Override
-            public void onTransitionResume(Transition transition) {}
+            public void onTransitionResume(Transition transition) {
+            }
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void animateRevealShow(View viewRoot) {
         int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
         int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
@@ -135,6 +163,7 @@ public class PostActivity extends AppCompatActivity {
         anim.start();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void animateRevealHide(final View viewRoot) {
         int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
         int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
@@ -151,7 +180,6 @@ public class PostActivity extends AppCompatActivity {
         anim.setDuration(ANIM_DURATION);
         anim.start();
     }
-
 
 
 //

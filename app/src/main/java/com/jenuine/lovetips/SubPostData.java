@@ -5,13 +5,13 @@ package com.jenuine.lovetips;
  */
 public class SubPostData {
 
-    private String title,content;
+    private String title, content;
+    private boolean titlecolor;
 
     public SubPostData(String title, String content) {
         this.title = title;
         this.content = content;
     }
-
     public String getTitle() {
         return title;
     }
