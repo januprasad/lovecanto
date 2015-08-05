@@ -23,14 +23,13 @@ import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final long ANIM_DURATION = 1000;
+    private static final long ANIM_DURATION = 600;
     private View bgViewGroup;
     private Lobster bariolBoldTextView;
     boolean isFirst = true;
@@ -40,22 +39,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        appDataPref=new AppDataPref(getApplicationContext());
+        appDataPref = new AppDataPref(getApplicationContext());
+        if(bariolBoldTextView!=null)
+            bariolBoldTextView.setText(R.string.app_name);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        appDataPref=new AppDataPref(getApplicationContext());
+        appDataPref = new AppDataPref(getApplicationContext());
         boolean netStatus = checkInternet();
-        if(!netStatus){
+        if (!netStatus) {
             loadOops();
             return;
         }
+        if (sexSet().length() == 0) {
+            loadChooseSex();
+            return;
+        }
+        startApp();
+    }
 
-
+    public void startApp() {
         bariolBoldTextView = (Lobster) findViewById(R.id.mTextView);
+        bariolBoldTextView.setText(R.string.app_name);
         bariolBoldTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,14 +89,18 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }, 1400);
 //        showNotification();
-        localPosts=new AppDataPref(getApplicationContext()).getPrefs("posts");
-        if (localPosts.length()==0) {
+        localPosts = new AppDataPref(getApplicationContext()).getPrefs("posts");
+        if (localPosts.length() == 0) {
             new ApiCall(new Callback() {
                 @Override
                 public void onSuccess(String response) {
                     Gson gson = new Gson();
-                    localPosts=response;
-                    appDataPref.setPrefs("posts",response);
+                    localPosts = response;
+                    appDataPref.setPrefs("posts", response);
+                    if(appDataPref.getPrefs("images").length()!=0){
+                        launchActivity();
+                        return;
+                    }
 //                  localPosts = gson.fromJson(response, Data.class);
                     TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
                     ConnectivityManager connec = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -96,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     if (mWifi.isConnected()) {
                         // Do whatever
                         callImageAPI(ImageApiCall.HD);
-                        return ;
+                        return;
                     }
                     if ((tm.getNetworkType() == TelephonyManager.NETWORK_TYPE_HSDPA)) {
                         Log.d("Type", "3g");// for 3g HSDPA networktype will be return as
@@ -122,16 +134,27 @@ public class MainActivity extends AppCompatActivity {
                 public void onFail(String response) {
 
                 }
-            }).execute();
+            },appDataPref.getPrefs("sex")).execute();
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     launchActivity();
                 }
-            }, 500);
+            }, 1000);
         }
 
+    }
+
+    private void loadChooseSex() {
+        Fragment mFragment = new ChooseSex();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.from_middle, R.anim.nothing, 0, R.anim.to_middle);
+        ft.replace(R.id.container, mFragment).addToBackStack(null).commit();
+    }
+
+    private String sexSet() {
+        return appDataPref.getPrefs("sex");
     }
 
     private void loadOops() {
@@ -148,8 +171,7 @@ public class MainActivity extends AppCompatActivity {
         if (mWifi.isConnected()) {
             // Do whatever
             return true;
-        }
-        else if (connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED || connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
+        } else if (connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED || connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
             //Do something in here when we are connected
             return true;
         } else if (connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED || connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
@@ -164,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String response) {
                 Gson gson = new Gson();
-                appDataPref.setPrefs("images",response);
+                appDataPref.setPrefs("images", response);
 //                DB.images = gson.fromJson(response, Images.class);
                 launchActivity();
             }
@@ -179,6 +201,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void launchActivity() {
+        if (isFinishing())
+            return;
 
         Intent i = new Intent(this, ListTitles.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -189,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             startActivity(i);
         }
+        finish();
     }
 
     private void setupLayout() {
@@ -342,5 +367,16 @@ public class MainActivity extends AppCompatActivity {
 
         // mId allows you to update the notification later on.
         mNotificationManager.notify(100, mBuilder.build());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        appDataPref.setPrefs("posts","");
+    }
+
+    public void popUpFragment() {
+        getFragmentManager().popBackStack();
+        bariolBoldTextView.setText("Loading...");
     }
 }

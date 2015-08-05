@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class ApiCall extends AsyncTask<String, String, String> {
 
+    private String type;
     ProgressDialog pDialog;
     String key = "";
 
@@ -27,8 +28,9 @@ public class ApiCall extends AsyncTask<String, String, String> {
      */
     Callback callback;
 
-    public ApiCall(Callback callback) {
+    public ApiCall(Callback callback,String type) {
         this.callback = callback;
+        this.type=type;
     }
 
 
@@ -60,9 +62,11 @@ public class ApiCall extends AsyncTask<String, String, String> {
         // getting product details by making HTTP request
 //        JSONObject json = new JSONParser().makeHttpRequest(
 //                "http://www.omdbapi.com/?t=terminator&y=&plot=short&r=json", "GET", params);
-        JSONObject json = new CustomHTTPClient().makeHttpRequest(
-                "https://raw.githubusercontent.com/jenuprasad/myapp-api/master/posts.json", "GET", params);
-
+        JSONObject json=null;
+        if(type.equalsIgnoreCase("boy")) json = new CustomHTTPClient().makeHttpRequest(
+                "https://raw.githubusercontent.com/jenuprasad/myapp-api/master/postsBoy.json", "GET", params);
+        else if(type.equalsIgnoreCase("girl")) json = new CustomHTTPClient().makeHttpRequest(
+                "https://raw.githubusercontent.com/jenuprasad/myapp-api/master/postsGirl.json", "GET", params);
 
         // check your log for json response
 
