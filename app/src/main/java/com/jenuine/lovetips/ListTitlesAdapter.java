@@ -26,7 +26,7 @@ public class ListTitlesAdapter extends RecyclerView.Adapter {
             super(v);
             mTextView = v;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            mTextView.setBackgroundResource(R.drawable.ripple_effect);
+                mTextView.setBackgroundResource(R.drawable.ripple_effect);
             v.setOnClickListener(this);
         }
 
@@ -37,9 +37,6 @@ public class ListTitlesAdapter extends RecyclerView.Adapter {
 
     }
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ListTitlesAdapter(Data data) {
@@ -47,6 +44,9 @@ public class ListTitlesAdapter extends RecyclerView.Adapter {
 
     }
 
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
+    }
 
     public void setOnClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
